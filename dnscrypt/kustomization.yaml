@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dnscrypt
+
+resources:
+  - base/namespace.yaml
+  - base/deployment.yaml
+  - base/svc.yaml
+
+images:
+  - name: gists/dnscrypt-proxy
+    newTag: latest
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: dnscrypt-config
+    files:
+    - config/dnscrypt-proxy.toml

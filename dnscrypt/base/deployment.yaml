@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dnscrypt
+  name: dnscrypt
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: dnscrypt
+  template:
+    metadata:
+      labels:
+        app: dnscrypt
+    spec:
+      containers:
+        - name: dnscrypt
+          image: gists/dnscrypt-proxy
+          ports:
+            - containerPort: 5353
+              name: dns-tcp
+              protocol: TCP
+            - containerPort: 5353
+              name: dns-udp
+              protocol: UDP
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+          volumeMounts:
+            - mountPath: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+              name: dnscrypt-config
+              subPath: dnscrypt-proxy.toml
+      volumes:
+        - name: dnscrypt-config
+          configMap:
+            name: dnscrypt-config

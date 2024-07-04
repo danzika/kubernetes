@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homeassistant-config-pvc
+  namespace: homeassistant
+  labels:
+    app: homeassistant
+spec:
+  volumeName: homeassistant-config-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
