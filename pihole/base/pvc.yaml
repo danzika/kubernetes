@@ -12,18 +12,3 @@ spec:
   resources:
     requests:
       storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pihole-config-pvc
-  namespace: pihole
-  labels:
-    app: pihole
-spec:
-  volumeName: pihole-config-pv
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi

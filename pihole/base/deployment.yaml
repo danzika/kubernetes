@@ -51,12 +51,13 @@ spec:
           volumeMounts:
             - mountPath: /etc/pihole/
               name: pihole-etc
-            - mountPath: /config
-              name: pihole-config
+            - mountPath: /etc/pihole/custom.list
+              name: pihole-local-dns-names
+              subPath: custom.list
       volumes:
         - name: pihole-etc
           persistentVolumeClaim:
             claimName: pihole-etc-pvc
-        - name: pihole-config
-          persistentVolumeClaim:
-            claimName: pihole-config-pvc
+        - name: pihole-local-dns-names
+          configMap:
+            name: pihole-local-dns-names
